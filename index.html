@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="NUMBER MYSTERY 多局歷史版">
+<title>NUMBER MYSTERY｜多局歷史</title>
+<style>
+:root{--ink:#51465f;--muted:#897e96;--paper:rgba(255,255,255,.9);--line:#eee6f3;--lav:#c9b8f2;--pink:#f5b8ce;--shadow:0 18px 55px rgba(116,91,145,.13)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;padding:30px 15px;font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;color:var(--ink);background:radial-gradient(circle at 12% 12%,#f5b8ce88,transparent 28%),radial-gradient(circle at 88% 18%,#c9b8f288,transparent 30%),radial-gradient(circle at 80% 90%,#b9d8f588,transparent 28%),linear-gradient(135deg,#fff8fb,#f7f4ff 55%,#f3faff)}
+.shell{width:min(100%,850px);margin:auto}.topline{display:flex;justify-content:space-between;gap:10px;margin:0 4px 15px;color:var(--muted);font-size:12px;letter-spacing:.13em;font-weight:800}
+.card{background:var(--paper);border:1px solid #ffffff;border-radius:28px;padding:clamp(20px,4vw,38px);box-shadow:var(--shadow);backdrop-filter:blur(12px)}
+header{text-align:center;margin-bottom:24px}.sparkle{font-size:25px}h1{margin:5px 0;font-size:clamp(28px,6vw,42px);letter-spacing:.05em}.subtitle{margin:7px 0;color:var(--muted);font-size:14px}
+.pills{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:13px}.pill{background:#f3edfb;color:#8066a2;border-radius:30px;padding:6px 12px;font-size:12px;font-weight:800}
+.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0}.rule{border-radius:15px;padding:12px 14px;background:#fbf7ff;color:var(--muted);font-size:13px}.rule b{color:#8066b1;font-size:16px;margin-right:5px}
+.game-area{border-radius:22px;padding:22px;background:linear-gradient(135deg,#fff3f8,#f5f1ff);text-align:center}.label{font-size:13px;color:var(--muted);font-weight:700;margin-bottom:13px}.inputs{display:flex;justify-content:center;gap:9px;margin:0 auto 17px}.digit{width:clamp(50px,12vw,66px);height:68px;border:2px solid #e7d9f1;border-radius:16px;background:white;color:var(--ink);text-align:center;font-size:29px;font-weight:800;outline:none}.digit:focus{border-color:#ad91dc;box-shadow:0 0 0 4px #c9b8f240}
+button{border:0;border-radius:13px;padding:12px 19px;font:inherit;font-weight:800;cursor:pointer;transition:.15s}button:hover{transform:translateY(-2px)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}.primary{color:white;background:linear-gradient(110deg,#d99ab9,#a991d7);box-shadow:0 8px 18px #a991d73d;min-width:145px}.secondary{color:#79658f;background:#eee8f8}.message{min-height:24px;margin:14px 0 0;font-size:14px;color:#8066a2;font-weight:700}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:19px 0}.debug-label{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;font-weight:700;cursor:pointer}.debug-label input{width:18px;height:18px;accent-color:#a991d7}.answer{display:inline-block;min-width:90px;padding:7px 12px;border-radius:11px;background:#f1ebfb;color:#8066b1;font-weight:900;letter-spacing:.18em;margin-left:6px}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:24px 2px 10px}.section-title h2{font-size:17px;margin:0}.small{font-size:12px;color:var(--muted)}.history{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:white}.history-row{display:grid;grid-template-columns:50px 1fr 1fr 1.1fr;gap:8px;align-items:center;padding:11px 14px;border-bottom:1px solid #f2edf5;font-size:13px}.history-row:last-child{border-bottom:0}.history-row.heading{background:#fbf8fd;color:var(--muted);font-size:12px;font-weight:800}.history-row strong{letter-spacing:.1em;font-size:16px}.result{color:#9274bd;font-weight:900}.empty{padding:20px;text-align:center;color:#a49aaf;font-size:13px}
+.round-list{display:grid;gap:11px}.round-card{border:1px solid var(--line);border-radius:17px;background:#fff;padding:15px}.round-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.round-name{font-weight:900}.status{font-size:11px;font-weight:900;border-radius:30px;padding:5px 10px}.done{background:#e8f6ef;color:#4d9871}.unfinished{background:#fff1e6;color:#bd8351}.round-meta{font-size:12px;color:var(--muted);margin-top:7px}.round-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.round-actions button{padding:8px 12px;font-size:12px}.round-detail{margin-top:12px;border-top:1px solid #f1ebf5;padding-top:10px}.round-detail .history-row{padding:8px 4px}.round-detail .empty{padding:12px}
+.bottom-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+footer{text-align:center;color:#a49aaf;font-size:11px;margin-top:18px;letter-spacing:.08em}
+@media(max-width:520px){body{padding:17px 9px}.card{border-radius:22px}.rules{grid-template-columns:1fr}.history-row{grid-template-columns:38px 1fr 1fr 1fr;padding:10px 8px;font-size:12px}.history-row strong{font-size:14px}.topline{font-size:10px}}
+</style>
+</head>
+<body>
+<main class="shell">
+<div class="topline"><span>✦ MINI GAME STUDIO</span><span>VERSION 02 · ROUND HISTORY</span></div>
+<section class="card">
+<header><div class="sparkle">✧ 🌷 ✧</div><h1>NUMBER MYSTERY</h1><p class="subtitle">數字解謎｜多局歷史紀錄版</p><div class="pills"><span class="pill">四位數字</span><span class="pill">多局紀錄</span><span class="pill">除錯模式</span></div></header>
+<div class="rules"><div class="rule"><b>Ａ</b>數字和位置都正確</div><div class="rule"><b>Ｂ</b>數字正確，但位置不同</div></div>
+<section class="game-area">
+<div class="label" id="roundLabel">第 1 局｜輸入四個不重複的數字</div>
+<div class="inputs">
+<input class="digit" inputmode="numeric" maxlength="1" aria-label="第1位" autocomplete="off">
+<input class="digit" inputmode="numeric" maxlength="1" aria-label="第2位" autocomplete="off">
+<input class="digit" inputmode="numeric" maxlength="1" aria-label="第3位" autocomplete="off">
+<input class="digit" inputmode="numeric" maxlength="1" aria-label="第4位" autocomplete="off">
+</div>
+<button class="primary" id="guessBtn">送出猜測 ✦</button><p class="message" id="message" role="status">準備好了嗎？試著找出正確答案！</p>
+</section>
+<div class="toolbar">
+<label class="debug-label"><input type="checkbox" id="debugToggle">除錯模式（顯示本局答案）</label>
+<div><span class="small">本局答案</span><span class="answer" id="answer">????</span></div>
+</div>
+<div class="section-title"><h2>✦ 目前這一局</h2><span class="small" id="guessCount">0 次猜測</span></div>
+<div class="history" id="currentHistory"><div class="history-row heading"><span>次數</span><span>輸入數字</span><span>結果</span><span>時間</span></div><div class="empty">還沒有猜測紀錄，來試試看吧！</div></div>
+<div class="bottom-actions"><button class="secondary" id="newRoundBtn">＋ 開始新的一局</button></div>
+<div class="section-title"><h2>✦ 所有局數歷史</h2><span class="small" id="roundCount">共 1 局</span></div>
+<div class="round-list" id="roundList"></div>
+<footer>本版本資料只保存在目前網頁｜重新整理後會清空</footer>
+</section><footer>MADE WITH CURIOSITY · HAVE FUN!</footer>
+</main>
+<script>
+const inputs=[...document.querySelectorAll(".digit")],guessBtn=document.getElementById("guessBtn"),newRoundBtn=document.getElementById("newRoundBtn"),debugToggle=document.getElementById("debugToggle"),answerView=document.getElementById("answer"),message=document.getElementById("message"),currentHistory=document.getElementById("currentHistory"),guessCount=document.getElementById("guessCount"),roundLabel=document.getElementById("roundLabel"),roundList=document.getElementById("roundList"),roundCount=document.getElementById("roundCount");
+let rounds=[],currentRoundId=0,nextRoundId=1;
+function makeAnswer(){const a=["0","1","2","3","4","5","6","7","8","9"];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,4).join("");}
+function currentRound(){return rounds.find(r=>r.id===currentRoundId);}
+function timeNow(){return new Date().toLocaleTimeString("zh-TW",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false});}
+function setMessage(t,error=false){message.textContent=t;message.style.color=error?"#cf6d8e":"#8066a2";}
+function updateAnswer(){const r=currentRound();answerView.textContent=debugToggle.checked&&r?r.answer:"????";}
+function addRow(container,entry,index){const row=document.createElement("div");row.className="history-row";[String(index+1),entry.guess,`${entry.A}A${entry.B}B`,entry.time].forEach((v,i)=>{const el=document.createElement(i===1?"strong":"span");if(i===2)el.className="result";el.textContent=v;row.appendChild(el);});container.appendChild(row);}
+function renderCurrent(){const r=currentRound();roundLabel.textContent=`第 ${r.id} 局｜輸入四個不重複的數字`;guessCount.textContent=`${r.guesses.length} 次猜測`;currentHistory.innerHTML='<div class="history-row heading"><span>次數</span><span>輸入數字</span><span>結果</span><span>時間</span></div>';if(!r.guesses.length){const e=document.createElement("div");e.className="empty";e.textContent="還沒有猜測紀錄，來試試看吧！";currentHistory.appendChild(e);}else r.guesses.forEach((g,i)=>addRow(currentHistory,g,i));}
+function renderRounds(){roundList.innerHTML="";roundCount.textContent=`共 ${rounds.length} 局`;rounds.forEach(r=>{const card=document.createElement("article");card.className="round-card";const top=document.createElement("div");top.className="round-top";const name=document.createElement("span");name.className="round-name";name.textContent=`第 ${r.id} 局`;const status=document.createElement("span");status.className="status "+(r.status==="已完成"?"done":"unfinished");status.textContent=r.status;top.append(name,status);const meta=document.createElement("div");meta.className="round-meta";meta.textContent=`${r.guesses.length} 次有效猜測｜開始時間：${r.startedAt}`;const actions=document.createElement("div");actions.className="round-actions";const view=document.createElement("button");view.className="secondary";view.textContent=r.showDetail?"收起紀錄":"查看紀錄";view.addEventListener("click",()=>{r.showDetail=!r.showDetail;renderRounds();});actions.appendChild(view);card.append(top,meta,actions);if(r.showDetail){const detail=document.createElement("div");detail.className="round-detail";if(!r.guesses.length){const e=document.createElement("div");e.className="empty";e.textContent="這一局沒有有效猜測。";detail.appendChild(e);}else r.guesses.forEach((g,i)=>addRow(detail,g,i));card.appendChild(detail);}roundList.appendChild(card);});}
+function refresh(){renderCurrent();renderRounds();updateAnswer();}
+function startNewRound(){const old=currentRound();if(old&&old.status==="進行中")old.status="未完成";const id=nextRoundId++;rounds.push({id,answer:makeAnswer(),guesses:[],status:"進行中",startedAt:timeNow(),showDetail:false});currentRoundId=id;inputs.forEach(x=>x.value="");debugToggle.checked=false;guessBtn.disabled=false;setMessage(`第 ${id} 局開始！祝你好運。`);refresh();inputs[0].focus();}
+function submitGuess(){const r=currentRound();if(r.status!=="進行中")return;const guess=inputs.map(x=>x.value).join("");if(guess.length!==4||!/^\d{4}$/.test(guess)){setMessage("請輸入完整的四位數字喔！",true);return;}if(new Set(guess).size!==4){setMessage("數字不能重複，請重新輸入！",true);return;}let A=0,B=0;for(let i=0;i<4;i++){if(guess[i]===r.answer[i])A++;else if(r.answer.includes(guess[i]))B++;}r.guesses.push({guess,A,B,time:timeNow()});if(A===4){r.status="已完成";guessBtn.disabled=true;setMessage(`太厲害了！第 ${r.id} 局完成，答案是 ${r.answer}！🎉`);}else setMessage(`這次是 ${A}A${B}B，繼續加油！`);inputs.forEach(x=>x.value="");refresh();inputs[0].focus();}
+inputs.forEach((input,i)=>{input.addEventListener("input",()=>{input.value=input.value.replace(/\D/g,"").slice(0,1);if(input.value&&i<3)inputs[i+1].focus();});input.addEventListener("keydown",e=>{if(e.key==="Backspace"&&!input.value&&i>0)inputs[i-1].focus();if(e.key==="Enter")submitGuess();});});
+guessBtn.addEventListener("click",submitGuess);newRoundBtn.addEventListener("click",startNewRound);debugToggle.addEventListener("change",updateAnswer);
+startNewRound();
+</script>
+</body></html>
